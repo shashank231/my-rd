@@ -12,14 +12,24 @@ const {
 } = actionTypes;
 
 
-function* listProductsSaga() {
-    let data = yield fetch('http://127.0.0.1:8000/api/products');
+function* listProductsSaga(request, action) {
+    const { obj1 } = action;
+    const {
+        companyName,
+        priceLowest,
+        priceHighest
+    } = obj1;
+    const url1 = `http://127.0.0.1:8000/api/products/?company=${companyName}&price_greater_than=${priceLowest}&price_lower_than=${priceHighest}`
+    let data = yield fetch(url1);
     data = yield data.json();
     yield put(listProductsSucess(data));
 }
 
-function* productsSaga() {
-    yield takeEvery(LIST_PRODUCTS, listProductsSaga)
+function* productsSaga(request) {
+    yield takeEvery(LIST_PRODUCTS, 
+          listProductsSaga,
+          request,
+        );
 }
 
 export default productsSaga;

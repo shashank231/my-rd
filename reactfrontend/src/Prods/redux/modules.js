@@ -6,9 +6,11 @@ const initialState = {
 export const LIST_PRODUCTS = 'PRODS/LIST_PRODUCTS';
 export const LIST_PRODUCTS_SUCCESS = 'PRODS/LIST_PRODUCTS_SUCCESS';
 
-export const listProducts = () => {
+export const listProducts = (obj1) => {
+    console.log('obj1 = ', obj1);
     return {
         type: LIST_PRODUCTS,
+        obj1,
     }
 }
 
