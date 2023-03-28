@@ -43,6 +43,7 @@ function TodoComponent(props){
             onChange={inputTextOnChange}
           />
           <Button 
+            className={styles.todo_btn1}
             variant="outline-secondary"
             id="button-addon2"
             as="input" 
