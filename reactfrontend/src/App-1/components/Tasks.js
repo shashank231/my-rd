@@ -2,7 +2,6 @@
 import React from "react";
 import { connect, useSelector } from "react-redux";
 import { itemsSelector } from "../redux/selectors";
-import { removeItem } from "../redux/modules";
 import { TasksContainer } from "./TaskContainer";
 
 
@@ -23,7 +22,5 @@ const mapStateToProps = (state) => ({
 });
 
 
-export const Tasks = connect(mapStateToProps, {
-    removeItem,
-})(TasksComponent);
+export const Tasks = connect(mapStateToProps, {})(TasksComponent);
 

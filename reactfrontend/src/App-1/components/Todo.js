@@ -2,29 +2,26 @@ import { connect } from 'react-redux'
 import { useState } from "react";
 import React from "react";
 import { Tasks } from "./Tasks";
-import { addItem, removeItem, removeAllItems, changeNum } from "../redux/modules";
+import { updateItems } from "../redux/modules";
 import { itemsSelector, numSelector } from "../redux/selectors";
 import Button from 'react-bootstrap/Button';
 import styles from "./Todo.module.scss";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function TodoComponent(props){
-  const {
-    addItem,
-    items,
-  } = props;
-
+  const { updateItems, items } = props;
   const [ task, setTask ] = useState("");
 
   const addNewItem = () => {
     let newItems = [...items];          // VVII
     newItems.push(task);
-    addItem(newItems);
+    updateItems(newItems);
     setTask('');
+    toast.success("Task Added", { autoClose: 1000 });
   }
 
   const inputTextOnChange = (event) => {
-    console.log(event.target.value);
     setTask(task => event.target.value);
   }
 
@@ -32,7 +29,6 @@ function TodoComponent(props){
       <React.Fragment>
         <div className={styles.parent_div}>
           <h1>To-DO</h1>
-
           <input 
             type="text" 
             className={styles.form__input} 
@@ -51,7 +47,10 @@ function TodoComponent(props){
             value="Add task"
             onClick={addNewItem}
           />
-          <Tasks />
+          <ToastContainer />
+          <div className={styles.tasks}>
+              <Tasks />
+          </div>
 
         </div>
       </React.Fragment>
@@ -66,8 +65,5 @@ const mapStateToProps = (state) => ({
 
 
 export const Todo = connect(mapStateToProps, {
-  changeNum,
-  addItem,
-  removeItem,
-  removeAllItems,
+  updateItems,
 })(TodoComponent);
