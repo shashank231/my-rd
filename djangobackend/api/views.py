@@ -38,7 +38,7 @@ class ProductsList(ListAPIView):
     filterset_class = ProductFilter  
     #filterset_fields = ['company']
 
-    return Response({}, status.)
+    # return Response({}, status.)
     # @swagger_auto_schema(
     #     manual_parameters=[
     #         openapi.Parameter(

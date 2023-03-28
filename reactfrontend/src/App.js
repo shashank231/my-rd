@@ -1,6 +1,8 @@
-import './App.css';
-import Header from './components/Header';
 import {Routes, Route} from 'react-router-dom'
+import './App.css';
+import React from 'react';
+
+import Header from './components/Header';
 import { Todo } from './App-1/components/Todo';
 import { Products } from './Prods/components/Products';
 
@@ -17,6 +19,7 @@ function App() {
 }
 
 export default App;
+
 
 // import './App.css';
 // import { useState, useEffect } from "react";

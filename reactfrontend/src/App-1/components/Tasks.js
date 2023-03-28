@@ -3,36 +3,20 @@ import React from "react";
 import { connect, useSelector } from "react-redux";
 import { itemsSelector } from "../redux/selectors";
 import { removeItem } from "../redux/modules";
+import { TasksContainer } from "./TaskContainer";
 
 
 function TasksComponent(props){
-    const {
-        removeItem,
-        items,
-    } = props;
-    const removeThisItem = () => {
-        let newitems
-
-    }
-
+    const { items } = props;
     return (
         <React.Fragment>
-            {items.map((item) => {
-                return(
-                    <div>
-                        <h3>{item}</h3>
-                        <button 
-                            type='submit'
-                            onClick={removeThisItem}
-                        >
-                            Remove Task
-                        </button>
-                    </div>
-                );
+            {items.map((item, index) => {
+                return <TasksContainer name={item} key={index} />;
             })}
         </React.Fragment>
     );
 }
+
 
 const mapStateToProps = (state) => ({
     items: itemsSelector(state),
