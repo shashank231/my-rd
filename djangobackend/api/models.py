@@ -13,3 +13,5 @@ class Products(models.Model):
     price = models.IntegerField()
     company = models.CharField(max_length=100)
 
+class TodoTasks(models.Model):
+    name = models.CharField(max_length=100)

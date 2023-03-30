@@ -7,10 +7,11 @@ import { TasksContainer } from "./TaskContainer";
 
 function TasksComponent(props){
     const { items } = props;
+    console.log( items );
     return (
         <React.Fragment>
-            {items.map((item, index) => {
-                return <TasksContainer name={item} key={index} />;
+            {items.map(({name, id}) => {
+                return <TasksContainer name={name} delid={id} key={id} />;
             })}
         </React.Fragment>
     );

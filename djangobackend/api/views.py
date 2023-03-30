@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from .serializers import StudentSerializer, ProductsSerializer
-from .models import Student, Products
+from .serializers import StudentSerializer, ProductsSerializer, TodoTasksListSerializer
+from .models import Student, Products, TodoTasks
 from .filters import ProductFilter
 # from .backends import SwaggerFilterBackend
 from rest_framework import status
@@ -71,3 +71,12 @@ class ProductsList(ListAPIView):
         price_highest = request.query_params.get('price_highest', '')
         print(company , price_lowest , price_highest)
         return super(ProductsList, self).get(request, *args, **kwargs)
+
+
+class TodoListPost(ListCreateAPIView):
+    queryset = TodoTasks.objects.all()
+    serializer_class = TodoTasksListSerializer
+
+class TodoDelete(RetrieveDestroyAPIView):
+    queryset = TodoTasks.objects.all()
+    serializer_class = TodoTasksListSerializer

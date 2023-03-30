@@ -1,29 +1,34 @@
 import { connect } from 'react-redux'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { Tasks } from "./Tasks";
-import { updateItems } from "../redux/modules";
-import { itemsSelector, numSelector } from "../redux/selectors";
+import { actions } from "../redux/modules";
 import Button from 'react-bootstrap/Button';
 import styles from "./Todo.module.scss";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function TodoComponent(props){
-  const { updateItems, items } = props;
+  const { listItems, listItemsPost } = props;
   const [ task, setTask ] = useState("");
 
   const addNewItem = () => {
-    let newItems = [...items];          // VVII
-    newItems.push(task);
-    updateItems(newItems);
-    setTask('');
-    toast.success("Task Added", { autoClose: 1000 });
+    if (task === ""){
+      toast.info("Add Some Text!!", { autoClose: false });
+    }else{
+      listItemsPost(task);
+      setTask('');
+      toast.success("Task Added", { autoClose: 1000 });
+    }
   }
 
   const inputTextOnChange = (event) => {
     setTask(task => event.target.value);
   }
+
+  useEffect(() => {
+    listItems();
+  }, []);
 
   return (
       <React.Fragment>
@@ -58,12 +63,10 @@ function TodoComponent(props){
 }
 
 
-const mapStateToProps = (state) => ({
-  items: itemsSelector(state),
-  num: numSelector(state),
-});
+const mapStateToProps = (state) => ({});
 
-
+const { listItems, listItemsPost } = actions;
 export const Todo = connect(mapStateToProps, {
-  updateItems,
+  listItems,
+  listItemsPost,
 })(TodoComponent);

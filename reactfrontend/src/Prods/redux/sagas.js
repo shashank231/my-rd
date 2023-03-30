@@ -1,16 +1,13 @@
 import { takeEvery, put } from 'redux-saga/effects'
 import { actions, actionTypes } from "./modules";
 
-
 const {
     listProductsSucess,
 } = actions;
 
-
 const {
     LIST_PRODUCTS,
 } = actionTypes;
-
 
 function* listProductsSaga(request, action) {
     const { obj1 } = action;
@@ -32,7 +29,7 @@ function* productsSaga(request) {
         );
 }
 
-export default productsSaga;
+export default [productsSaga];
 
 
 

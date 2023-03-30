@@ -1,31 +1,47 @@
 const initialState = {
     items: [],
-    num: "ab",
 }
 
-export const UPDATE_ITEMS = 'APP1/TODO/UPDATE_ITEMS';
+const LIST_ITEMS = 'APP1/TODO/LIST_ITEMS';
+const LIST_ITEMS_SUCCESS = 'APP1/TODO/LIST_ITEMS_SUCCESS';
+const LIST_ITEMS_POST = 'APP1/TODO/LIST_ITEMS_POST';
+const LIST_ITEMS_DELETE = 'APP1/TODO/LIST_ITEMS_DELETE';
 
-
-
-export const updateItems = (newItems) => {
-    return {
-        type: UPDATE_ITEMS,
-        newItems
-    }
+const listItems = () => {
+    return { type: LIST_ITEMS }
+}
+const listItemsSuccess = (items) => {
+    return { type: LIST_ITEMS_SUCCESS, items }
+}
+const listItemsPost = (item) => {
+    return { type: LIST_ITEMS_POST, item }
+}
+const listItemsDelete = (id) => {
+    return { type: LIST_ITEMS_DELETE, id }
 }
 
 const todoReducer = (data = initialState, action) => {
     switch (action.type) {
-
-        case UPDATE_ITEMS: {
-            const { newItems } = action;
-            return  { ...data, items: newItems };
+        case LIST_ITEMS_SUCCESS: {
+            const { items } = action;
+            return  { ...data, items };
         }
-
         default:
             return data;
     }
 }
 
-
 export default todoReducer;
+
+export const actions = {
+    listItems,
+    listItemsSuccess,
+    listItemsPost,
+    listItemsDelete,
+};
+
+export const actionTypes = {
+    LIST_ITEMS,
+    LIST_ITEMS_POST,
+    LIST_ITEMS_DELETE,
+};

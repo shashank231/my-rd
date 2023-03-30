@@ -1,8 +1,6 @@
 
-// import React from "react";
 import { connect } from "react-redux";
-import { itemsSelector, getCurrentDate, deleteItemSelector } from "../redux/selectors";
-
+import { itemsSelector, getCurrentDate } from "../redux/selectors";
 import * as React from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -12,18 +10,18 @@ import IconButton from '@mui/material/IconButton';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styles from "./TaskContainer.module.scss";
-import { updateItems } from "../redux/modules";
-import { ToastContainer, toast } from 'react-toastify';
+import { actions } from "../redux/modules";
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
+
 
 function TaskContainerComponent(props){
-    const { name, items, updateItems } = props;
+    const { name, delid, listItemsDelete } = props;
 
     function handleDelete(){
-      let newItems = [...items];          // VVII
-      let index = items.indexOf(name);
-      newItems.splice(index, 1);
-      updateItems(newItems);
+      listItemsDelete(delid);
       toast.error("Task Deleted", { autoClose: 1000 });
     }
 
@@ -42,10 +40,12 @@ function TaskContainerComponent(props){
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar>
+                  <Tippy content={name}>
                   <ListItemText
                     primary={name}
                     secondary={getCurrentDate("-")}
                   />
+                  </Tippy>
                 </ListItem>
           </div>
         </React.Fragment>
@@ -56,6 +56,6 @@ const mapStateToProps = (state) => ({
     items: itemsSelector(state),
 });
 
-
-export const TasksContainer = connect(mapStateToProps, { updateItems })(TaskContainerComponent);
+const { listItemsDelete } = actions;
+export const TasksContainer = connect(mapStateToProps, { listItemsDelete })(TaskContainerComponent);
 

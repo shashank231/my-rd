@@ -7,12 +7,6 @@ export const itemsSelector = createSelector(
     ({ items }) => items 
 );
 
-
-export const numSelector = createSelector(
-    todoSelector,
-    ({ num }) => num 
-);
-
 export function getCurrentDate(separator=''){
     let newDate = new Date()
     let date = newDate.getDate();
