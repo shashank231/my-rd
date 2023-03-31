@@ -7,10 +7,23 @@ import Button from 'react-bootstrap/Button';
 import styles from "./Todo.module.scss";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 function TodoComponent(props){
   const { listItems, listItemsPost, listItemsDelete } = props;
   const [ task, setTask ] = useState("");
+  const [ modalOpen, setModalOpen ] = useState(false);
 
   const addNewItem = () => {
     if (task === ""){
@@ -22,24 +35,42 @@ function TodoComponent(props){
     }
   }
 
-  const clearALLItem = () => {
-    listItemsDelete(-1);
-    toast.error("All Tasks Deleted", { autoClose: 1000 });
-  }
-
   const inputTextOnChange = (event) => {
     setTask(task => event.target.value);
   }
 
-  useEffect(() => {
-    listItems();
-  }, []);
+  const yesDelete = () => {
+    setModalOpen(false);
+    listItemsDelete(-1);
+    toast.error("All Tasks Deleted", { autoClose: 1000 });
+  }
 
-  return (
-      <React.Fragment>
-        <div className={styles.parent}>
-          <h1>To-DO</h1>
-          <input
+  const deleteModal = (
+    <Modal isOpen={modalOpen} style={customStyles} >
+            <h2>Are you sure you want to delete all tasks ?</h2>
+            <div className={styles.modal_btn_wrapper}>
+              <Button 
+                className={styles.btn1}
+                variant="outline-secondary"
+                as="input" 
+                type="button" 
+                value="Yes"
+                onClick={yesDelete}
+              />
+              <Button 
+                className={styles.btn1}
+                variant="outline-secondary"
+                as="input" 
+                type="button" 
+                value="Cancel"
+                onClick={()=>setModalOpen(false)}
+              />
+            </div>
+          </Modal>
+    );
+
+  const ipt = (
+    <input
             className={styles.parent_input}
             type="text" 
             id="name" 
@@ -48,7 +79,10 @@ function TodoComponent(props){
             required=""
             onChange={inputTextOnChange}
           />
-          <div className={styles.parent_btn}>
+  );
+
+  const btns = (
+    <div className={styles.parent_btn}>
             <Button 
               className={styles.btn1}
               variant="outline-secondary"
@@ -63,19 +97,34 @@ function TodoComponent(props){
               as="input" 
               type="button" 
               value="Clear All Tasks"
-              onClick={clearALLItem}
+              onClick={()=>setModalOpen(true)}
             />
           </div>
-          <ToastContainer />
-          <div className={styles.tasks}>
-              <Tasks />
-          </div>
+  );
 
+  const tasks = (
+    <div className={styles.tasks}>
+      <Tasks />
+    </div>
+  );
+
+  useEffect(() => {
+    listItems();
+  }, []);
+
+  return (
+      <React.Fragment>
+        <div className={styles.parent}>
+          <h1>To-DO</h1>
+          {ipt}
+          {btns}
+          {tasks}
+          {deleteModal}
+          <ToastContainer />
         </div>
       </React.Fragment>
   );
 }
-
 
 const mapStateToProps = (state) => ({});
 
