@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework.response import Response
 from .serializers import StudentSerializer, ProductsSerializer, TodoTasksListSerializer
 from .models import Student, Products, TodoTasks
 from .filters import ProductFilter
@@ -80,3 +81,11 @@ class TodoListPost(ListCreateAPIView):
 class TodoDelete(RetrieveDestroyAPIView):
     queryset = TodoTasks.objects.all()
     serializer_class = TodoTasksListSerializer
+
+    def delete(self, request, *args, **kwargs):
+        if self.kwargs['pk'] == str(-1):
+            TodoTasks.objects.all().delete()
+            return Response(status=status.HTTP_200_OK, data={'response': 'Deleted Successfully'})
+        else:
+            return self.destroy(request, *args, **kwargs)
+   

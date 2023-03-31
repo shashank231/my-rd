@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import path, re_path
 from api import views
 
 urlpatterns = [
@@ -7,5 +7,5 @@ urlpatterns = [
     path('student/post/', views.StudentPost.as_view()),
     path('products/', views.ProductsList.as_view()),
     path('todotasks/', views.TodoListPost.as_view()),
-    path('todotasks/<int:pk>', views.TodoDelete.as_view()),
+    re_path(r'^todotasks/(?P<pk>(\d+|-[1]))/$', views.TodoDelete.as_view()),
 ]

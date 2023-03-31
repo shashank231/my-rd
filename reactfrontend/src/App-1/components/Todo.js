@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function TodoComponent(props){
-  const { listItems, listItemsPost } = props;
+  const { listItems, listItemsPost, listItemsDelete } = props;
   const [ task, setTask ] = useState("");
 
   const addNewItem = () => {
@@ -22,6 +22,11 @@ function TodoComponent(props){
     }
   }
 
+  const clearALLItem = () => {
+    listItemsDelete(-1);
+    toast.error("All Tasks Deleted", { autoClose: 1000 });
+  }
+
   const inputTextOnChange = (event) => {
     setTask(task => event.target.value);
   }
@@ -32,26 +37,35 @@ function TodoComponent(props){
 
   return (
       <React.Fragment>
-        <div className={styles.parent_div}>
+        <div className={styles.parent}>
           <h1>To-DO</h1>
-          <input 
+          <input
+            className={styles.parent_input}
             type="text" 
-            className={styles.form__input} 
             id="name" 
             placeholder="Add your next task" 
             value={task}
             required=""
             onChange={inputTextOnChange}
           />
-          <Button 
-            className={styles.todo_btn1}
-            variant="outline-secondary"
-            id="button-addon2"
-            as="input" 
-            type="button" 
-            value="Add task"
-            onClick={addNewItem}
-          />
+          <div className={styles.parent_btn}>
+            <Button 
+              className={styles.btn1}
+              variant="outline-secondary"
+              as="input" 
+              type="button" 
+              value="Add task"
+              onClick={addNewItem}
+            />
+            <Button 
+              className={styles.btn1}
+              variant="outline-secondary"
+              as="input" 
+              type="button" 
+              value="Clear All Tasks"
+              onClick={clearALLItem}
+            />
+          </div>
           <ToastContainer />
           <div className={styles.tasks}>
               <Tasks />
@@ -65,8 +79,9 @@ function TodoComponent(props){
 
 const mapStateToProps = (state) => ({});
 
-const { listItems, listItemsPost } = actions;
+const { listItems, listItemsPost, listItemsDelete } = actions;
 export const Todo = connect(mapStateToProps, {
   listItems,
   listItemsPost,
+  listItemsDelete,
 })(TodoComponent);
