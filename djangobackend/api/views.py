@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveDestroyAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.response import Response
@@ -78,9 +78,12 @@ class TodoListPost(ListCreateAPIView):
     queryset = TodoTasks.objects.all()
     serializer_class = TodoTasksListSerializer
 
-class TodoDelete(RetrieveDestroyAPIView):
+class TodoDelete(RetrieveUpdateDestroyAPIView):
     queryset = TodoTasks.objects.all()
     serializer_class = TodoTasksListSerializer
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         if self.kwargs['pk'] == str(-1):

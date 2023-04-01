@@ -8,6 +8,7 @@ const {
     LIST_ITEMS,
     LIST_ITEMS_POST,
     LIST_ITEMS_DELETE,
+    LIST_ITEMS_UPDATE,
 } = actionTypes;
 
 
@@ -46,10 +47,28 @@ function* watchListItemsDeleteSaga(request) {
     yield takeEvery(LIST_ITEMS_DELETE, listItemsDeleteSaga, request);
 }
 
+
+function* listItemUpdateSaga(request, action) {
+    const { id, item } = action; 
+    const endpoint = `http://127.0.0.1:8000/api/todotasks/${id}/`
+    const payload = { name: item }
+    try{
+        yield call(axios.put, endpoint, payload);
+        yield put(listItems());
+    } catch(e){
+        console.log(e);
+    }
+}
+function* watchListItemUpdateSaga(request) {
+    yield takeEvery(LIST_ITEMS_UPDATE, listItemUpdateSaga, request);
+}
+
+
 export default [
     watchListItemsSaga,
     watchListItemPostSaga,
     watchListItemsDeleteSaga,
+    watchListItemUpdateSaga,
 ];
 
 

@@ -4,10 +4,8 @@ import { connect, useSelector } from "react-redux";
 import { itemsSelector } from "../redux/selectors";
 import { TasksContainer } from "./TaskContainer";
 
-
 function TasksComponent(props){
     const { items } = props;
-    console.log( items );
     return (
         <React.Fragment>
             {items.map(({name, id}) => {
@@ -17,11 +15,9 @@ function TasksComponent(props){
     );
 }
 
-
 const mapStateToProps = (state) => ({
     items: itemsSelector(state),
 });
-
 
 export const Tasks = connect(mapStateToProps, {})(TasksComponent);
 

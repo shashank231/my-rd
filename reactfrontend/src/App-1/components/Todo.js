@@ -9,7 +9,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import { isThereAnyitemsSelector } from '../redux/selectors'; 
-
 const customStyles = {
   content: {
     top: '50%',
@@ -114,7 +113,7 @@ function TodoComponent(props){
 
   useEffect(() => {
     listItems();
-  }, []);
+  }, [listItems]);
 
   return (
       <React.Fragment>
