@@ -37,6 +37,7 @@ function* watchListItemPostSaga(request) {
     yield takeEvery(LIST_ITEMS_POST, listItemPostSaga, request);
 }
 
+
 function* listItemsDeleteSaga(request, action) {
     const { id } = action;
     const endpoint = `http://127.0.0.1:8000/api/todotasks/${id}`
@@ -70,6 +71,3 @@ export default [
     watchListItemsDeleteSaga,
     watchListItemUpdateSaga,
 ];
-
-
-

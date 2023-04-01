@@ -70,7 +70,6 @@ class ProductsList(ListAPIView):
         company = request.query_params.get('company', '')
         price_lowest = request.query_params.get('price_lowest', '')
         price_highest = request.query_params.get('price_highest', '')
-        print(company , price_lowest , price_highest)
         return super(ProductsList, self).get(request, *args, **kwargs)
 
 
@@ -91,4 +90,4 @@ class TodoDelete(RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_200_OK, data={'response': 'Deleted Successfully'})
         else:
             return self.destroy(request, *args, **kwargs)
-   
+

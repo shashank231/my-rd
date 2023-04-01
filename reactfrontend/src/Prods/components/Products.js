@@ -39,35 +39,22 @@ function ProductsComponent(props){
   return (
       <React.Fragment>
         <div className={styles.productName}>
-        <Box
-          component="form"
-          sx={{
-            '& > :not(style)': { m: 1 },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <Input placeholder="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-          <Input placeholder="Price lowest" value={priceLowest} onChange={(e) => setPriceLowest(e.target.value)} />
-          <Input placeholder="Price highest" value={priceHighest} onChange={(e) => setPriceHighest(e.target.value)} />
-        </Box>
-
-        {Button1}
-        <ProductsList />
-   
+          <Box
+            component="form"
+            sx={{
+              '& > :not(style)': { m: 1 },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <Input placeholder="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+            <Input placeholder="Price lowest" value={priceLowest} onChange={(e) => setPriceLowest(e.target.value)} />
+            <Input placeholder="Price highest" value={priceHighest} onChange={(e) => setPriceHighest(e.target.value)} />
+          </Box>
+          {Button1}
         </div>
 
-
-
-
-
-        {/* <div className={styles.div1}>
-          {Button1}
-          {btnProductShow ? '' : <ProductsList />}
-        </div> */}
-        {/* <div className={styles.form1} >
-          <OldYoutubeForm />
-        </div> */}
+        <ProductsList />
       </React.Fragment>
   );
 }

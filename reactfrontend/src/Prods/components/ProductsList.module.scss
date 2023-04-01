@@ -2,3 +2,17 @@
 .card {
     margin: 10px;
 }
+
+.card_pic{
+    width: 250px;
+    height: 285px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.cardParent{
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -8,9 +8,9 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 @admin.register(Products)
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ['pid', 'name', 'price']
+class ProductsAdmin(admin.ModelAdmin):
+    list_display = ['name', 'pid', 'price']
 
 @admin.register(TodoTasks)
-class StudentAdmin(admin.ModelAdmin):
+class TodoTasksAdmin(admin.ModelAdmin):
     list_display = ['id', 'name']
