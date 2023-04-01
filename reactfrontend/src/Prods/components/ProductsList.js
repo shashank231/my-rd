@@ -15,7 +15,7 @@ function ProductsListComponent(props) {
       return (
         <div className={styles.card}>
           <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
+            <Card.Img variant="top" src={prod.prod_pc ? prod.prod_pc : "http://127.0.0.1:8000/images/default_product_pic.png"} className={styles.card_pic}/>
             <Card.Body>
               <Card.Title>{prod.name}</Card.Title>
               <Card.Text>
@@ -30,7 +30,9 @@ function ProductsListComponent(props) {
 
     return (
       <React.Fragment>
-        {productsList}
+        <div className={styles.cardParent}>
+          {productsList}
+        </div>
       </React.Fragment>
   );
 }
