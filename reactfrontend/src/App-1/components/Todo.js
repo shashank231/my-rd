@@ -8,6 +8,7 @@ import styles from "./Todo.module.scss";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
+import { isThereAnyitemsSelector } from '../redux/selectors'; 
 
 const customStyles = {
   content: {
@@ -21,7 +22,7 @@ const customStyles = {
 };
 
 function TodoComponent(props){
-  const { listItems, listItemsPost, listItemsDelete } = props;
+  const { listItems, listItemsPost, listItemsDelete, itemsPresentBool } = props;
   const [ task, setTask ] = useState("");
   const [ modalOpen, setModalOpen ] = useState(false);
 
@@ -91,7 +92,7 @@ function TodoComponent(props){
               value="Add task"
               onClick={addNewItem}
             />
-            <Button 
+            { itemsPresentBool ? <Button 
               className={styles.btn1}
               variant="outline-secondary"
               as="input" 
@@ -99,6 +100,9 @@ function TodoComponent(props){
               value="Clear All Tasks"
               onClick={()=>setModalOpen(true)}
             />
+            :
+            null
+            }
           </div>
   );
 
@@ -126,7 +130,9 @@ function TodoComponent(props){
   );
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  itemsPresentBool: isThereAnyitemsSelector(state),
+});
 
 const { listItems, listItemsPost, listItemsDelete } = actions;
 export const Todo = connect(mapStateToProps, {
