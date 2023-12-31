@@ -5,6 +5,7 @@ import React from 'react';
 import Header from './components/Header';
 import { Todo } from './App-1/components/Todo';
 import { Products } from './Prods/components/Products';
+import { TMC } from './TMC/components/tmc';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Products />} />
         <Route path='/todo' element={<Todo />} />
+        <Route path='/tmc' element={<TMC />} />
       </Routes>
     </div>
   );

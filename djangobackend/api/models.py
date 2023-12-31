@@ -14,5 +14,6 @@ class Products(models.Model):
     company = models.CharField(max_length=100)
     prod_pc = models.ImageField(null=True, blank=True)
 
+
 class TodoTasks(models.Model):
     name = models.CharField(max_length=100)

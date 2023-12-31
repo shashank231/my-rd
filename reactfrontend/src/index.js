@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import store from './redux/store';                     // locak REDUX folder
+import store from './redux/store';                     // local REDUX folder
 import { Provider } from 'react-redux';                // REDUX
 import { BrowserRouter } from 'react-router-dom';      // REACT-ROUTER
 

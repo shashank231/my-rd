@@ -9,8 +9,9 @@ const itemsSelector = createSelector(
 
 const isThereAnyitemsSelector = createSelector(
     todoSelector,
-    ({ items }) => {
-        return items.length ? true : false;
+    () => {
+        // return items.length ? true : false;
+        return true;
     } 
 );
 

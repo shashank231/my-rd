@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
@@ -9,6 +9,76 @@ from .models import Student, Products, TodoTasks
 from .filters import ProductFilter
 # from .backends import SwaggerFilterBackend
 from rest_framework import status
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import User 
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+import re
+
+def registerPage(request):
+    regex_name = r'^[a-zA-Z]+$'
+    target_url = 'http://127.0.0.1:8000/api/login/'
+    target_url_reg = 'http://127.0.0.1:8000/api/register/'
+
+    if request.method == "POST":
+        first_name = request.POST.get('firstName')
+        if not re.match(regex_name, first_name):
+            messages.info(request, "First Name format is not correct")
+            return redirect(target_url_reg)
+        last_name = request.POST.get('lastName')
+        username = request.POST.get('userName')
+        password = request.POST.get('password')
+
+        user = User.objects.filter(username=username)
+        if user.exists():
+            messages.info(request, "Username already exists")
+            return redirect(target_url_reg)
+
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            username = username)
+        user.set_password(password)
+        user.save()
+        messages.info(request, "User saved successfully")
+        return redirect(target_url)
+
+    return render(request, 'api/register.html')
+
+
+def loginPage(request):
+
+    if request.method == "POST":
+        username = request.POST.get('userName')
+        password = request.POST.get('password')
+        target_url2 = 'http://127.0.0.1:8000/api/login/'
+        target_dummy = 'http://127.0.0.1:8000/api/dummy/'
+
+        if not User.objects.filter(username=username).exists():
+            return redirect(target_url2)
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return redirect(target_url2)
+        else:
+            login(request, user)
+            return redirect(target_dummy)
+            # return redirect(target_react)
+
+    return render(request, 'api/login.html')
+
+
+def logoutPage(request):
+    logout(request)
+    return redirect('http://127.0.0.1:8000/api/login/')
+
+
+@login_required(login_url='http://127.0.0.1:8000/api/login/')
+def dummy_page(request):
+    return render(request, 'api/dummy.html')
+
 
 class StudentList(ListAPIView):
     queryset = Student.objects.all()
@@ -76,6 +146,7 @@ class ProductsList(ListAPIView):
 class TodoListPost(ListCreateAPIView):
     queryset = TodoTasks.objects.all()
     serializer_class = TodoTasksListSerializer
+
 
 class TodoDelete(RetrieveUpdateDestroyAPIView):
     queryset = TodoTasks.objects.all()

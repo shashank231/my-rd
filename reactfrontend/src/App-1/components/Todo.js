@@ -1,13 +1,15 @@
-import { connect } from 'react-redux'
-import { useEffect, useState } from "react";
+
 import React from "react";
-import { Tasks } from "./Tasks";
-import { actions } from "../redux/modules";
+import { useEffect, useState } from "react";
+import { connect } from 'react-redux'
 import Button from 'react-bootstrap/Button';
-import styles from "./Todo.module.scss";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
+
+import { Tasks } from "./Tasks";
+import { actions } from "../redux/modules";
+import styles from "./Todo.module.scss";
 import { isThereAnyitemsSelector } from '../redux/selectors'; 
 const customStyles = {
   content: {
@@ -27,7 +29,7 @@ function TodoComponent(props){
 
   const addNewItem = () => {
     if (task === ""){
-      toast.info("Add Some Text!!", { autoClose: false });
+      toast.info("Add Some Text!!", { autoClose: true });
     }else{
       listItemsPost(task);
       setTask('');
@@ -71,14 +73,14 @@ function TodoComponent(props){
 
   const ipt = (
     <input
-            className={styles.parent_input}
-            type="text" 
-            id="name" 
-            placeholder="Add your next task" 
-            value={task}
-            required=""
-            onChange={inputTextOnChange}
-          />
+      className={styles.parent_input}
+      type="text" 
+      id="name" 
+      placeholder="Add your next task" 
+      value={task}
+      required=""
+      onChange={inputTextOnChange}
+    />
   );
 
   const btns = (
@@ -134,8 +136,10 @@ const mapStateToProps = (state) => ({
 });
 
 const { listItems, listItemsPost, listItemsDelete } = actions;
-export const Todo = connect(mapStateToProps, {
+const mapDispatchToProps = {
   listItems,
   listItemsPost,
   listItemsDelete,
-})(TodoComponent);
+}
+
+export const Todo = connect(mapStateToProps, mapDispatchToProps)(TodoComponent);

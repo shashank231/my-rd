@@ -6,7 +6,6 @@ from .models import Student, Products, TodoTasks
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'email']
 
-
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
     list_display = ['name', 'pid', 'price']
